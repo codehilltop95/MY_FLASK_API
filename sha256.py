@@ -7,7 +7,6 @@ from flask import request
 bl=Blueprint("security",__name__)
 import os
 import json
-a=[]
 firebase_credentials_json = os.environ.get('CRED_JASON')
 if not firebase_credentials_json:
     raise ValueError("Firebase credentials not found in environment variables")
@@ -25,14 +24,8 @@ class security(MethodView):
 
         if not uid:
             return jsonify({"error": "Missing UID"}), 400
-
-        a.append(uid)
         return jsonify({
             "message": "UID received successfully",
             "uid": uid,
             "timestamp": timestamp
         }), 200
-@bl.route("/check")
-class check(MethodView):
-    def get(self):
-        return a
