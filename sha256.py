@@ -18,7 +18,7 @@ db = firestore.client()  # Initialize Firestore or Realtime Database client
 # Define your Blueprint
 @bl.route("/call")
 class security(MethodView):
-    def get(self):
+    def post(self):
         # Extract UID from the query string
         uid = request.args.get("uid")
         timestamp = request.args.get("timestamp")
@@ -39,5 +39,5 @@ class security(MethodView):
         }), 200
 @bl.route("/check")
 class check(MethodView):
-    def post(self):
+    def get(self):
         return "HELLO API"
