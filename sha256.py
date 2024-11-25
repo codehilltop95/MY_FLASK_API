@@ -5,7 +5,14 @@ from firebase_admin import credentials, firestore,initialize_app
 from flask import jsonify
 from requests import request
 bl=Blueprint("security",__name__)
-cred = credentials.Certificate(r"C:\Users\HOME\Desktop\MY_FLASK_API\fir-auth-cb338-firebase-adminsdk-qwk97-fa554685e7.json")  # replace with your downloaded JSON file path
+import os
+import json
+firebase_credentials_json = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS_JSON')
+if not firebase_credentials_json:
+    raise ValueError("Firebase credentials not found in environment variables")
+
+cred = credentials.Certificate(json.loads(firebase_credentials_json))
+
 initialize_app(cred)
 db = firestore.client()  # Initialize Firestore or Realtime Database client
 # Define your Blueprint
