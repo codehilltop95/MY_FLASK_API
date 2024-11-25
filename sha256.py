@@ -7,6 +7,7 @@ from requests import request
 bl=Blueprint("security",__name__)
 import os
 import json
+a=[]
 firebase_credentials_json = os.environ.get('CRED_JASON')
 if not firebase_credentials_json:
     raise ValueError("Firebase credentials not found in environment variables")
@@ -31,7 +32,7 @@ class security(MethodView):
             db.collection("uids").add({"uid": uid, "timestamp": timestamp})
         except Exception as e:
             return jsonify({"error": f"Failed to save data: {str(e)}"}), 500
-
+        a.append(uid)
         return jsonify({
             "message": "UID received successfully",
             "uid": uid,
@@ -40,4 +41,4 @@ class security(MethodView):
 @bl.route("/check")
 class check(MethodView):
     def get(self):
-        return "HELLO API"
+        return a[0]
