@@ -9,7 +9,6 @@ import json
 firebase_credentials_json = os.environ.get('CRED_JASON')
 if not firebase_credentials_json:
     raise ValueError("Firebase credentials not found in environment variables")
-
 cred = credentials.Certificate(json.loads(firebase_credentials_json))
 initialize_app(cred)
 db = firestore.client()  # Initialize Firestore or Realtime Database client
