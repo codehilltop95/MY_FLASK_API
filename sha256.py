@@ -7,7 +7,7 @@ from requests import request
 bl=Blueprint("security",__name__)
 import os
 import json
-firebase_credentials_json = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS_JSON')
+firebase_credentials_json = os.environ.get('CRED_JASON')
 if not firebase_credentials_json:
     raise ValueError("Firebase credentials not found in environment variables")
 
