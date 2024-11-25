@@ -13,7 +13,6 @@ if not firebase_credentials_json:
     raise ValueError("Firebase credentials not found in environment variables")
 
 cred = credentials.Certificate(json.loads(firebase_credentials_json))
-
 initialize_app(cred)
 db = firestore.client()  # Initialize Firestore or Realtime Database client
 # Define your Blueprint
@@ -41,4 +40,4 @@ class security(MethodView):
 @bl.route("/check")
 class check(MethodView):
     def get(self):
-        return a[0]
+        return a
