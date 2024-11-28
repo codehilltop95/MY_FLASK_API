@@ -3,6 +3,7 @@ from flask.views import MethodView
 from firebase_admin import credentials, firestore,initialize_app
 from flask import jsonify
 from flask import request
+from passlib.hash import pbkdf2_sha256
 bl=Blueprint("security",__name__)
 import os
 import json
@@ -18,7 +19,7 @@ uuid=None
 class security(MethodView):
     def get(self):
         # Extract UID from the query string
-        uid = request.args.get("uid")
+        uid = pbkdf2_sha256.hash(request.args.get("uid"))
         timestamp = request.args.get("timestamp")
         uuid=uid
         if not uid:
