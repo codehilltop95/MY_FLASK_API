@@ -3,6 +3,8 @@ from flask.views import MethodView
 from firebase_admin import credentials, firestore,initialize_app,auth,db
 from flask import jsonify
 from flask import request
+import logging
+logging.basicConfig(level=logging.INFO)
 import os,json
 from passlib.hash import pbkdf2_sha256
 bl=Blueprint("security",__name__)
@@ -26,11 +28,13 @@ class security(MethodView):
         timestamp = request.args.get("timestamp")
         if not uid:
             return jsonify({"error": "Missing UID"}), 400
-        return jsonify({
+        data=jsonify({
             "message": "UID received successfully",
             "uid": uid,
             "timestamp": timestamp
-        }), 200
+        })
+        logging.info("%s",data)
+        return data, 200
 @bl.route("/call",methods=["GET"])
 class callapi(MethodView):
     def get(self):
