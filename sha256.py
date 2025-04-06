@@ -7,10 +7,9 @@ from passlib.hash import pbkdf2_sha256
 bl=Blueprint("security",__name__)
 import os
 import json
-with open("findbuddy_sdk.json") as f:
-    cred = credentials.Certificate(json.load(f))
+firebase_credentials_json = os.environ.get('CRED_JSON')
+cred = credentials.Certificate(firebase_credentials_json)
 initialize_app(cred)
-uuid=None
 @bl.route("/user", methods=["GET"])
 class security(MethodView):
     def get(self):
