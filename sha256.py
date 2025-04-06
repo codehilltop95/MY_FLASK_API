@@ -1,16 +1,14 @@
 from flask_smorest import Blueprint
 from flask.views import MethodView
-from firebase_admin import credentials, firestore,initialize_app,auth,db,_apps
+from firebase_admin import credentials, firestore,initialize_app,auth,db
 from flask import jsonify
 from flask import request
 from passlib.hash import pbkdf2_sha256
 bl=Blueprint("security",__name__)
-import os
-firebase_credentials_json = os.environ.get('CRED_JSON')
-j=_apps
-if not j:
-    cred = credentials.Certificate(firebase_credentials_json)
-    initialize_app(cred)
+import os,json
+with open("findbuddy-2b5ed-firebase-adminsdk-fbsvc-5c59dce1af.json") as f:
+    cred=credentials.Certificate(json.load)
+initialize_app(cred)
 @bl.route("/user", methods=["GET"])
 class security(MethodView):
     def get(self):
