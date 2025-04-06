@@ -6,7 +6,8 @@ from flask import request
 from passlib.hash import pbkdf2_sha256
 bl=Blueprint("security",__name__)
 import os
-cred = credentials.Certificate("findbuddy-2b5ed-firebase-adminsdk-fbsvc-5c59dce1af.json")
+firebase_credentials_json = os.environ.get('CRED_JSON')
+cred = credentials.Certificate(firebase_credentials_json)
 initialize_app(cred)
 @bl.route("/user", methods=["GET"])
 class security(MethodView):
