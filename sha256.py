@@ -28,14 +28,13 @@ class security(MethodView):
         timestamp = request.args.get("timestamp")
         if not uid:
             return jsonify({"error": "Missing UID"}), 400
-        data=jsonify({
+        data={
             "message": "UID received successfully",
             "uid": uid,
             "timestamp": timestamp
-        })
-        print(data)
-        logging.info("%s",data)
-        return data, 200
+        }
+        logging.info("The result %s",data)
+        return jsonify(data), 200
 @bl.route("/call",methods=["GET"])
 class callapi(MethodView):
     def get(self):
