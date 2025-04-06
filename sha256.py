@@ -33,6 +33,7 @@ class security(MethodView):
             "uid": uid,
             "timestamp": timestamp
         })
+        print(data)
         logging.info("%s",data)
         return data, 200
 @bl.route("/call",methods=["GET"])
