@@ -9,20 +9,19 @@ import os
 import json
 with open("findbuddy-2b5ed-firebase-adminsdk-fbsvc-00f944f8ad.json") as f:
     cred = credentials.Certificate(json.load(f))
-initialize_app(cred,{
-    'databaseURL': 'https://f-buddy-24b0b-default-rtdb.firebaseio.com/'  # Replace with your DB URL
-})
-db = firestore.client()
+initialize_app(cred)
 uuid=None
 @bl.route("/user", methods=["GET"])
 class security(MethodView):
     def get(self):
-        global uuid
-        ref = db.reference('/')  # adjust this to point to the right path if needed
-        data = ref.get()
-        if not data or "User UID" not in data:
-            return jsonify({"error": "'User UID' not found in Firebase DB"}), 404
-        uid_val=data["User UID"]
+        page = auth.list_users()
+        latest_user = None
+
+        # Get the most recently created user
+        for user in page.users:
+            if not latest_user or user.user_metadata.creation_timestamp > latest_user.user_metadata.creation_timestamp:
+                latest_user = user
+        uid_val=latest_user.uid
         uid = pbkdf2_sha256.hash(uid_val)
         timestamp = request.args.get("timestamp")
         if not uid:
