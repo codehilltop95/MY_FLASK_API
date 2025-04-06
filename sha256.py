@@ -6,9 +6,7 @@ from flask import request
 import os,json
 from passlib.hash import pbkdf2_sha256
 bl=Blueprint("security",__name__)
-n=os.environ.get("CRED_JSON")
-with open(n) as f:
-    cred=credentials.Certificate(json.load(f))
+cred=credentials.Certificate("CRED_JSON")
 initialize_app(cred)
 @bl.route("/user", methods=["GET"])
 class security(MethodView):
