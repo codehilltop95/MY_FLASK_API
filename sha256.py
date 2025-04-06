@@ -7,6 +7,8 @@ import os,json
 from passlib.hash import pbkdf2_sha256
 bl=Blueprint("security",__name__)
 cred_path = os.environ.get('CRED_JSON')
+if not cred_path:
+    raise ValueError("CRED_JSON environment variable not set!")
 cred = credentials.Certificate(cred_path)
 initialize_app(cred)
 @bl.route("/user", methods=["GET"])
