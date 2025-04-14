@@ -8,6 +8,7 @@ logging.basicConfig(level=logging.INFO)
 import os,json
 from passlib.hash import pbkdf2_sha256
 bl=Blueprint("security",__name__)
+last_hashed_uid = None
 cred_path = os.environ.get("CRED_JSON")
 if not cred_path:
     raise ValueError("CRED_JSON environment variable not set!")
@@ -25,6 +26,7 @@ class security(MethodView):
                 latest_user = user
         uid_val=latest_user.uid
         uid = pbkdf2_sha256.hash(uid_val)
+        last_hashed_uid = uid
         timestamp = request.args.get("timestamp")
         if not uid:
             return jsonify({"error": "Missing UID"}), 400
@@ -39,4 +41,6 @@ class security(MethodView):
 class callapi(MethodView):
     def get(self):
         return jsonify({
-            "message":"UID fetched successfully" }),200
+            "message": "UID fetched successfully",
+            "uid": last_hashed_uid
+        }), 200
