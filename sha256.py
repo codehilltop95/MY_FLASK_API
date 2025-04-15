@@ -17,6 +17,7 @@ initialize_app(cred)
 @bl.route("/user", methods=["GET"])
 class security(MethodView):
     def get(self):
+        global last_hashed_uid
         page = auth.list_users()
         latest_user = None
 
@@ -40,6 +41,7 @@ class security(MethodView):
 @bl.route("/call",methods=["GET"])
 class callapi(MethodView):
     def get(self):
+        global last_hashed_uid
         return jsonify({
             "message": "UID fetched successfully for call reference",
             "uid": last_hashed_uid
