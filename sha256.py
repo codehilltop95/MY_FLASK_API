@@ -41,6 +41,6 @@ class security(MethodView):
 class callapi(MethodView):
     def get(self):
         return jsonify({
-            "message": "UID fetched successfully",
+            "message": "UID fetched successfully for call reference",
             "uid": last_hashed_uid
         }), 200
