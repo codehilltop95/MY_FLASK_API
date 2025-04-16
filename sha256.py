@@ -37,12 +37,9 @@ class security(MethodView):
             "timestamp": timestamp
         }
         logging.info("The result %s",data)
-        return jsonify(data), 200
+        return jsonify(uid), 200
 @bl.route("/call",methods=["GET"])
 class callapi(MethodView):
     def get(self):
         global last_hashed_uid
-        return jsonify({
-            "message": "UID fetched successfully for call reference",
-            "uid": last_hashed_uid
-        }), 200
+        return jsonify(last_hashed_uid), 200
